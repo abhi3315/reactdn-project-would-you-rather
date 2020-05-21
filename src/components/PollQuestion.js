@@ -1,15 +1,13 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import {
     Segment,
     Header,
     Grid,
-    Image,
-    Button,
-    Form,
-    Radio
+    Image
 } from 'semantic-ui-react'
+import Poll from './Poll'
+import Result from './Result'
 import { handleSaveQuestionAnswer } from '../actions/users';
 
 class PollQuestion extends Component {
@@ -28,7 +26,7 @@ class PollQuestion extends Component {
     }
 
     render() {
-        const { question, author } = this.props
+        const { question, author, unanswered } = this.props
         const disabled = this.state.value === '' ? true : false
         return (
             <Segment.Group>
@@ -45,40 +43,17 @@ class PollQuestion extends Component {
                             <Image src={author.avatarURL} />
                         </Grid.Column>
                         <Grid.Column width={11}>
-                            <Fragment>
-                                <Header as="h4" textAlign="left">
-                                    Would you rather
-                                </Header>
-                                <Form onSubmit={this.handleSubmit}>
-                                    <Form.Field>
-                                        <Radio
-                                            label={question.optionOne.text}
-                                            name="radioGroup"
-                                            value="optionOne"
-                                            checked={this.state.value === 'optionOne'}
-                                            onChange={this.handleChange}
-                                        />
-                                        <br />
-                                        <Radio
-                                            label={question.optionTwo.text}
-                                            name="radioGroup"
-                                            value="optionTwo"
-                                            checked={this.state.value === 'optionTwo'}
-                                            onChange={this.handleChange}
-                                        />
-                                    </Form.Field>
-                                    <Form.Field>
-                                        <Button
-                                            color="green"
-                                            size="tiny"
-                                            fluid
-                                            positive
-                                            disabled={disabled}
-                                            content="Submit"
-                                        />
-                                    </Form.Field>
-                                </Form>
-                            </Fragment>
+                            {unanswered ? (
+                                <Poll
+                                    handleChange={this.handleChange}
+                                    handleSubmit={this.handleSubmit}
+                                    question={question}
+                                    disabled={disabled}
+                                    value={this.state.value}
+                                />
+                            ) : (
+                                    <Result />
+                                )}
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
@@ -93,19 +68,25 @@ function mapStateToProps(
 ) {
     let question,
         author,
+        unanswered = false,
         badPath = false
     if (question_id !== undefined) {
         question = questions[question_id]
         author = users[question.author]
+        if (question_id in users) {
+            unanswered = true
+        }
     } else {
         const { question_id } = match.params
         question = questions[question_id]
-        const user = users[authedUser]
 
         if (question === undefined) {
             badPath = true
         } else {
             author = users[question.author]
+            if (question_id in users[authedUser].answers) {
+                unanswered = true
+            }
         }
     }
 
@@ -113,7 +94,8 @@ function mapStateToProps(
         badPath,
         question,
         author,
-        authedUser
+        authedUser,
+        unanswered
     }
 }
 

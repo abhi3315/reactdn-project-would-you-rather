@@ -38,7 +38,7 @@ export class PollCards extends Component {
                                     or...
                                 </p>
                                 {unanswered ? (
-                                    <Link to={`unanswered/${question_id}`}>
+                                    <Link to={`question/${question_id}`}>
                                         <Button
                                             color="teal"
                                             size="tiny"
@@ -50,7 +50,7 @@ export class PollCards extends Component {
                                         />
                                     </Link>
                                 ) :
-                                    <Link to={`answered/${question_id}`}>
+                                    <Link to={`question/${question_id}`}>
                                         <Button
                                             color="green"
                                             size="tiny"
@@ -83,7 +83,6 @@ function mapStateToProps(
     } else {
         const { question_id } = match.params
         question = questions[question_id]
-        const user = users[authedUser]
 
         if (question === undefined) {
             badPath = true
