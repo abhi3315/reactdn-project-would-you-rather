@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {
     Segment,
     Header,
@@ -11,14 +11,14 @@ import {
 
 export class PollCards extends Component {
     render() {
-        const { question, author } = this.props
+        const { question, question_id, unanswered, author } = this.props
         return (
             <Segment.Group>
                 <Header as="h4"
                     textAlign="left"
                     block
                     attached="top"
-                    style={{ borderTop: '3px solid teal' }}
+                    style={unanswered ? { borderTop: '3px solid teal' } : { borderTop: '3px solid Green' }}
                 >
                     {author.name} asks:
                 </Header>
@@ -37,15 +37,30 @@ export class PollCards extends Component {
                                     <br />
                                     or...
                                 </p>
-                                <Button
-                                    color="teal"
-                                    size="tiny"
-                                    fluid
-                                    basic
-                                    style={{borderRadius:"5px"}}
-                                    content="View Poll"
-                                    attached="bottom"
-                                />
+                                {unanswered ? (
+                                    <Link to={`unanswered/${question_id}`}>
+                                        <Button
+                                            color="teal"
+                                            size="tiny"
+                                            fluid
+                                            basic
+                                            style={{ borderRadius: "5px" }}
+                                            content="View Poll"
+                                            attached="bottom"
+                                        />
+                                    </Link>
+                                ) :
+                                    <Link to={`answered/${question_id}`}>
+                                        <Button
+                                            color="green"
+                                            size="tiny"
+                                            fluid
+                                            basic
+                                            style={{ borderRadius: "5px" }}
+                                            content="View Poll Result"
+                                            attached="bottom"
+                                        />
+                                    </Link>}
                             </Fragment>
                         </Grid.Column>
                     </Grid.Row>
