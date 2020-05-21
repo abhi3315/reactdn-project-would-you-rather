@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Grid } from 'semantic-ui-react'
 import { handleInitialData } from '../actions/shared'
 import Login from './Login'
@@ -8,6 +8,7 @@ import Home from './Home'
 import PollQuestion from './PollQuestion'
 import Nav from './Nav'
 import NewQuestion from './NewQuestion'
+import LeaderBoard from './LeaderBoard'
 
 class App extends Component {
   componentDidMount() {
@@ -34,6 +35,7 @@ class App extends Component {
                   <Switch>
                     <Route exact path='/' component={Home} />
                     <Route path='/add' component={NewQuestion} />
+                    <Route path='/leaderboard' component={LeaderBoard} />
                     <Route path='/question/:question_id' component={PollQuestion} />
                   </Switch>
                 </ContentGrid>
@@ -51,7 +53,7 @@ const ContentGrid = ({ children }) => (
       <Grid.Column style={{ maxWidth: 550 }}>{children}</Grid.Column>
     </Grid.Row>
   </Grid>
-);
+)
 
 function mapStateToProps({ authedUser }) {
   return {
@@ -59,4 +61,4 @@ function mapStateToProps({ authedUser }) {
   }
 }
 
-export default connect(mapStateToProps, { handleInitialData })(App);
+export default connect(mapStateToProps, { handleInitialData })(App)
