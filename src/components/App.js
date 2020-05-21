@@ -6,6 +6,7 @@ import { handleInitialData } from '../actions/shared'
 import Login from './Login'
 import Home from './Home'
 import PollQuestion from './PollQuestion'
+import Nav from './Nav'
 
 class App extends Component {
   componentDidMount() {
@@ -27,6 +28,7 @@ class App extends Component {
             ) :
             (
               <Fragment>
+                <Nav />
                 <ContentGrid>
                   <Switch>
                     <Route exact path='/' component={Home} />
