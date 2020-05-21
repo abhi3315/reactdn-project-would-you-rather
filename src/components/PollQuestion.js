@@ -8,7 +8,8 @@ import {
 } from 'semantic-ui-react'
 import Poll from './Poll'
 import Result from './Result'
-import { handleSaveQuestionAnswer } from '../actions/users';
+import { handleSaveQuestionAnswer } from '../actions/users'
+import { Redirect } from 'react-router-dom'
 
 class PollQuestion extends Component {
     state = {
@@ -26,8 +27,13 @@ class PollQuestion extends Component {
     }
 
     render() {
-        const { question, author, unanswered } = this.props
+        const { question, author, badPath, unanswered } = this.props
         const disabled = this.state.value === '' ? true : false
+
+        if (badPath === true) {
+            return <Redirect to="/questions/bad_id" />
+        }
+
         return (
             <Segment.Group>
                 <Header as="h4"

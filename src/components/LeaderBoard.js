@@ -9,7 +9,7 @@ import {
     Divider
 } from 'semantic-ui-react'
 
-const trophyColor = ['yellow', 'grey', 'orange']
+const trophyColor = ['yellow', 'orange', 'grey']
 
 class LeaderBoard extends Component {
     render() {

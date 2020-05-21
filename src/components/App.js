@@ -9,6 +9,7 @@ import PollQuestion from './PollQuestion'
 import Nav from './Nav'
 import NewQuestion from './NewQuestion'
 import LeaderBoard from './LeaderBoard'
+import NotFound from './NotFound'
 
 class App extends Component {
   componentDidMount() {
@@ -36,7 +37,9 @@ class App extends Component {
                     <Route exact path='/' component={Home} />
                     <Route path='/add' component={NewQuestion} />
                     <Route path='/leaderboard' component={LeaderBoard} />
+                    <Route path="/questions/bad_id" component={NotFound} />
                     <Route path='/question/:question_id' component={PollQuestion} />
+                    <Route component={NotFound} />
                   </Switch>
                 </ContentGrid>
               </Fragment>
