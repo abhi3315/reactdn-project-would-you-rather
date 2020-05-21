@@ -34,9 +34,10 @@ class Poll extends Component {
                     </Form.Field>
                     <Form.Field>
                         <Button
-                            color="green"
+                            color="teal"
                             size="tiny"
                             fluid
+                            basic
                             positive
                             disabled={disabled}
                             content="Submit"

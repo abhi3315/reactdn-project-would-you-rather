@@ -52,7 +52,7 @@ class PollQuestion extends Component {
                                     value={this.state.value}
                                 />
                             ) : (
-                                    <Result />
+                                    <Result question={question} />
                                 )}
                         </Grid.Column>
                     </Grid.Row>
@@ -68,13 +68,13 @@ function mapStateToProps(
 ) {
     let question,
         author,
-        unanswered = false,
+        unanswered = true,
         badPath = false
     if (question_id !== undefined) {
         question = questions[question_id]
         author = users[question.author]
         if (question_id in users) {
-            unanswered = true
+            unanswered = false
         }
     } else {
         const { question_id } = match.params
@@ -85,7 +85,7 @@ function mapStateToProps(
         } else {
             author = users[question.author]
             if (question_id in users[authedUser].answers) {
-                unanswered = true
+                unanswered = false
             }
         }
     }
