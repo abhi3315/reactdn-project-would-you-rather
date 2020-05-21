@@ -10,6 +10,7 @@ import {
     Form,
     Radio
 } from 'semantic-ui-react'
+import { handleSaveQuestionAnswer } from '../actions/users';
 
 class PollQuestion extends Component {
     state = {
@@ -21,8 +22,8 @@ class PollQuestion extends Component {
     handleSubmit = e => {
         e.preventDefault()
         if (this.state.value !== '') {
-            const { authUser, question, handleSaveQuestionAnswer } = this.props
-            handleSaveQuestionAnswer(authUser, question.id, this.state.value)
+            const { authedUser, question, handleSaveQuestionAnswer } = this.props
+            handleSaveQuestionAnswer(authedUser, question.id, this.state.value)
         }
     }
 
@@ -111,10 +112,12 @@ function mapStateToProps(
     return {
         badPath,
         question,
-        author
+        author,
+        authedUser
     }
 }
 
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    { handleSaveQuestionAnswer }
 )(PollQuestion)
